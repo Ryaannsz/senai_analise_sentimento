@@ -4,13 +4,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Como você está?</title>
-  <meta name="description" content="Escreva o que está sentindo e o modelo do SENAI diz se o seu texto soa positivo ou negativo.">
+  <meta name="description" content="Escreva o que está sentindo e veja a cor mudar conforme o modelo do SENAI lê o seu texto.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&display=swap">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body data-humor="neutro">
+<body>
+  <div class="ceu" aria-hidden="true">
+    <span class="nuvem nuvem-a"></span>
+    <span class="nuvem nuvem-b"></span>
+    <span class="nuvem nuvem-c"></span>
+  </div>
+
   <div class="pagina">
     <header class="marca">
       <span class="marca-nome">SENAI</span>
@@ -18,36 +24,40 @@
     </header>
 
     <main>
-      <form id="formulario" class="formulario" novalidate>
-        <h1 id="pergunta" class="pergunta">Como você está se sentindo agora?</h1>
+      <h1 id="pergunta" class="pergunta">Como você está se sentindo agora?</h1>
 
-        <textarea
-          id="texto"
-          name="texto"
-          class="campo"
-          rows="3"
-          maxlength="1000"
-          aria-labelledby="pergunta"
-          aria-describedby="erro"
-          placeholder="Escreva com suas palavras, do jeito que vier."
-          required
-        ></textarea>
+      <textarea
+        id="texto"
+        name="texto"
+        class="campo"
+        rows="3"
+        maxlength="1000"
+        aria-labelledby="pergunta"
+        aria-describedby="dica erro"
+        placeholder="Escreva com suas palavras, do jeito que vier."
+        autofocus
+      ></textarea>
 
-        <p id="erro" class="erro" role="alert" hidden></p>
+      <div class="linha-apoio">
+        <p id="dica" class="dica">A cor muda enquanto você escreve.</p>
+        <button id="limpar" type="button" class="botao-texto" hidden>Limpar</button>
+      </div>
 
-        <div class="acoes">
-          <button id="analisar" type="submit" class="botao">Analisar sentimento</button>
-          <button id="limpar" type="button" class="botao-texto" hidden>Escrever outro</button>
-          <span class="atalho" aria-hidden="true">ou Ctrl + Enter</span>
-        </div>
-      </form>
+      <p id="erro" class="erro" role="alert" hidden></p>
 
-      <section id="resultado" class="resultado" aria-live="polite" hidden>
+      <section id="resultado" class="resultado" hidden>
         <p class="resultado-frase">Seu texto soa</p>
-        <p id="sentimento" class="sentimento"></p>
-        <div class="confianca">
-          <div class="medidor" aria-hidden="true"><span id="medidor-barra" class="medidor-barra"></span></div>
-          <p id="confianca-texto" class="confianca-texto"></p>
+        <p id="sentimento" class="sentimento" aria-live="polite"></p>
+
+        <div class="escala">
+          <div class="escala-faixa" aria-hidden="true">
+            <span id="marcador" class="escala-marcador"></span>
+          </div>
+          <div class="escala-pontas" aria-hidden="true">
+            <span>negativo</span>
+            <span>positivo</span>
+          </div>
+          <p id="chance" class="chance"></p>
         </div>
       </section>
     </main>

@@ -33,6 +33,13 @@ def prever(texto: str) -> Saida:
     )
 
 
+def chance_positivo(texto: str) -> float:
+    """Probabilidade de o texto ser positivo, de 0 a 1. Usada na análise ao vivo."""
+    modelo = carregar_modelo()
+    indice = list(modelo.classes_).index("positivo")
+    return round(float(modelo.predict_proba([texto])[0][indice]), 4)
+
+
 def main() -> None:
     textos = ["Este é um ótimo produto!", "Não gostei do serviço."]
 

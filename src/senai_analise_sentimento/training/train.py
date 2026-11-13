@@ -7,7 +7,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, f1_score
 from sklearn.model_selection import train_test_split
-from sklearn.pipeline import Pipeline
+from sklearn.pipeline import FeatureUnion, Pipeline
 
 from senai_analise_sentimento.core.paths import DATA_PATH, MODEL_PATH
 
@@ -23,9 +23,27 @@ def main() -> None:
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
+    # Palavras capturam o sentido; pedaços de 2 a 5 caracteres deixam o modelo
+    # reagir a palavras incompletas, o que faz a análise ao vivo mudar a cada letra.
     pipeline = Pipeline(
         [
-            ("tfidf", TfidfVectorizer(strip_accents="unicode", ngram_range=(1, 2))),
+            (
+                "tfidf",
+                FeatureUnion(
+                    [
+                        ("palavras", TfidfVectorizer(strip_accents="unicode", ngram_range=(1, 2))),
+                        (
+                            "caracteres",
+                            TfidfVectorizer(
+                                strip_accents="unicode",
+                                analyzer="char_wb",
+                                ngram_range=(2, 5),
+                                sublinear_tf=True,
+                            ),
+                        ),
+                    ]
+                ),
+            ),
             ("clf", LogisticRegression(max_iter=1000)),
         ]
     )
