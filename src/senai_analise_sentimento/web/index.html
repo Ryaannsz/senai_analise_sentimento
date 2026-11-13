@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Como você está?</title>
+  <meta name="description" content="Escreva o que está sentindo e o modelo do SENAI diz se o seu texto soa positivo ou negativo.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-humor="neutro">
+  <div class="pagina">
+    <header class="marca">
+      <span class="marca-nome">SENAI</span>
+      <span class="marca-produto">Análise de sentimento</span>
+    </header>
+
+    <main>
+      <form id="formulario" class="formulario" novalidate>
+        <h1 id="pergunta" class="pergunta">Como você está se sentindo agora?</h1>
+
+        <textarea
+          id="texto"
+          name="texto"
+          class="campo"
+          rows="3"
+          maxlength="1000"
+          aria-labelledby="pergunta"
+          aria-describedby="erro"
+          placeholder="Escreva com suas palavras, do jeito que vier."
+          required
+        ></textarea>
+
+        <p id="erro" class="erro" role="alert" hidden></p>
+
+        <div class="acoes">
+          <button id="analisar" type="submit" class="botao">Analisar sentimento</button>
+          <button id="limpar" type="button" class="botao-texto" hidden>Escrever outro</button>
+          <span class="atalho" aria-hidden="true">ou Ctrl + Enter</span>
+        </div>
+      </form>
+
+      <section id="resultado" class="resultado" aria-live="polite" hidden>
+        <p class="resultado-frase">Seu texto soa</p>
+        <p id="sentimento" class="sentimento"></p>
+        <div class="confianca">
+          <div class="medidor" aria-hidden="true"><span id="medidor-barra" class="medidor-barra"></span></div>
+          <p id="confianca-texto" class="confianca-texto"></p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="rodape">
+      O modelo foi treinado com comentários de clientes e pode errar com frases sobre outros assuntos.
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
